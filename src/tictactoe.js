@@ -69,6 +69,11 @@ const Tictactoe = () => {
   //display who's turn
   const display = isXturn ? "X" : "O";
 
+  // if (isDraw) {
+  //   return alert("draw");
+  // }
+  console.log(winner);
+  const text = <p>click restart to start new game</p>;
   return (
     <div className="fullGame">
       <h2 className="selectTitle">Select : X or O</h2>
@@ -85,8 +90,9 @@ const Tictactoe = () => {
         </Button>
       </div>
       <hr></hr>
-      {winner ? " " : <h2>{display} Turn</h2>}
+      {!winner && <h2>{display} Turn</h2>}
       <hr></hr>
+
       <div className="board">
         {board.map((val, index) => (
           <GameBox
@@ -95,8 +101,25 @@ const Tictactoe = () => {
             onPlayerClick={() => handleClick(index)}
           />
         ))}
+        {/* {winner === "X" ? alert(`Winner ${winner}`) : isDraw && alert("Draw")} */}
       </div>
-      {winner ? alert(`Winner ${winner}`) : isDraw && alert("Draw")}
+
+      {winner ? (
+        <>
+          <p>
+            winner is<b> {winner}</b>
+          </p>
+          {text}
+        </>
+      ) : (
+        isDraw && (
+          <>
+            {" "}
+            <p>draw</p> {text}
+          </>
+        )
+      )}
+
       <Button style={{ marginTop: "10px" }} variant="outlined" onClick={reset}>
         restart
       </Button>

@@ -8,10 +8,9 @@ const ColorPalette = () => {
   };
   const color = (value) => {
     const length = array.length;
-    console.log("color:", (100 / length) * value);
-    return (100 / length) * value;
+    console.log("color:", Math.abs((255 / length) * value - 255));
+    return Math.abs((255 / length) * value - 255);
   };
-
   return (
     <div className="container">
       <h2>Color Palette</h2>
@@ -21,8 +20,14 @@ const ColorPalette = () => {
           <span
             key={index}
             className="colorPalette"
-            style={{ background: `rgb(255 0 0 /${color(item)}%)` }}
-          ></span>
+            // style={{ background: `rgb(255 0 0 /${color(item)}%)` }}
+            style={{
+              background: `rgb(255 ${color(item)} ${color(item)} /100%)`,
+            }}
+          >
+            {item}
+            {/* {} */}
+          </span>
         ))}
       </div>
     </div>

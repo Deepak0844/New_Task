@@ -5,9 +5,9 @@ import Tictactoe from "./tictactoe";
 export default function App() {
   return (
     <div>
-      {/* <Tictactoe />
-      <InfiniteScroll /> */}
-      <ColorPalette />
+      <Tictactoe />
+      {/* <InfiniteScroll /> */}
+      {/* <ColorPalette /> */}
     </div>
   );
 }
