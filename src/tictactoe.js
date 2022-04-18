@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import "./App.css";
 
@@ -69,11 +69,18 @@ const Tictactoe = () => {
   //display who's turn
   const display = isXturn ? "X" : "O";
 
-  // if (isDraw) {
-  //   return alert("draw");
-  // }
-  console.log(winner);
   const text = <p>click restart to start new game</p>;
+
+  const [winnerL, setWinnerL] = useState([]);
+  useEffect(() => {
+    if (winner === "X") {
+      setWinnerL((prev) => [...prev, { winner: "X" }]);
+    } else if (winner === "O") {
+      setWinnerL((prev) => [...prev, { winner: "O" }]);
+    } else if (isDraw) {
+      setWinnerL((prev) => [...prev, { winner: "draw" }]);
+    }
+  }, [winner, isDraw]);
   return (
     <div className="fullGame">
       <h2 className="selectTitle">Select : X or O</h2>
@@ -92,7 +99,6 @@ const Tictactoe = () => {
       <hr></hr>
       {!winner && <h2>{display} Turn</h2>}
       <hr></hr>
-
       <div className="board">
         {board.map((val, index) => (
           <GameBox
@@ -101,9 +107,7 @@ const Tictactoe = () => {
             onPlayerClick={() => handleClick(index)}
           />
         ))}
-        {/* {winner === "X" ? alert(`Winner ${winner}`) : isDraw && alert("Draw")} */}
       </div>
-
       {winner ? (
         <>
           <p>
@@ -119,10 +123,39 @@ const Tictactoe = () => {
           </>
         )
       )}
-
       <Button style={{ marginTop: "10px" }} variant="outlined" onClick={reset}>
         restart
       </Button>
+      {winnerL.length > 0 && (
+        <div className="table">
+          <table>
+            <tr>
+              <th>game</th>
+              <th>X</th>
+              <th>O</th>
+            </tr>
+            {winnerL.map((item, index) => (
+              <tr className="tb" key={index}>
+                <td>{index + 1}</td>
+                <td>
+                  {item.winner === "draw"
+                    ? "draw"
+                    : item.winner === "X"
+                    ? "win"
+                    : "lost"}
+                </td>
+                <td>
+                  {item.winner === "draw"
+                    ? "draw"
+                    : item.winner === "O"
+                    ? "win"
+                    : "lost"}
+                </td>
+              </tr>
+            ))}
+          </table>
+        </div>
+      )}
     </div>
   );
 };
